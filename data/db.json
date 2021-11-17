@@ -1,0 +1,67 @@
+{
+  "notes": [
+    {
+      "title": "New note",
+      "content": "This note is for testing purposes<div>This is another line</div>",
+      "motif": "green",
+      "date": "10/17/2021",
+      "id": 1
+    },
+    {
+      "title": "New Content",
+      "content": "My new note",
+      "motif": "violet",
+      "date": "10/17/2021",
+      "id": 2
+    },
+    {
+      "title": "Add Titleewdwed",
+      "content": "Write Content...qwedwed",
+      "motif": "blue",
+      "date": "10/17/2021",
+      "id": 3
+    },
+    {
+      "title": "Add Titleasd",
+      "content": "Write Content...asdsa",
+      "motif": "monochrome",
+      "date": "10/17/2021",
+      "id": 5
+    },
+    {
+      "title": "Add Titlewf",
+      "content": "Write Content...efgert",
+      "motif": "yellow",
+      "date": "10/17/2021",
+      "id": 6
+    },
+    {
+      "title": "Add Titlewedf",
+      "content": "Write Content...wedw3ed",
+      "motif": "pink",
+      "date": "10/17/2021",
+      "id": 7
+    },
+    {
+      "title": "Add Titldrf",
+      "content": "Write Content...dfgfghwde",
+      "motif": "orange",
+      "date": "10/17/2021",
+      "id": 8
+    },
+    {
+      "title": "Add Titlefd",
+      "content": "Write Content...df",
+      "motif": "red",
+      "date": "10/17/2021",
+      "id": 11
+    },
+    {
+      "title": "Add Titledf",
+      "content": "Write Content...fd",
+      "motif": "monochrome",
+      "date": "10/17/2021",
+      "id": 12
+    }
+  ]
+}
