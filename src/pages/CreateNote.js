@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import LooksIcon from "@mui/icons-material/Looks";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -43,9 +43,13 @@ const CreateNote = () => {
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
 
-  useEffect(() => {
+  const getEditedTheme = useCallback(() => {
     setEditedTheme("monochrome");
-  }, []);
+  }, [setEditedTheme]);
+
+  useEffect(() => {
+    getEditedTheme();
+  }, [getEditedTheme]);
 
   const formik = useFormik({
     initialValues: {
@@ -56,7 +60,7 @@ const CreateNote = () => {
       const title = editedTitle;
       const content = editedContent;
       const today = new Date();
-      const date = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+      const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
       const motif = editedTheme;
       const entry = {
         title,
@@ -76,16 +80,16 @@ const CreateNote = () => {
     },
   });
 
-  const gettingTheme = () => {
+  const gettingTheme = useCallback(() => {
     let currentMotif = motifs.filter((motif) => motif[0] === editedTheme);
     setBackground(currentMotif[0][2]);
     setTitleColor(currentMotif[0][3]);
     setContentColor(currentMotif[0][3]);
-  };
+  }, [setBackground, setTitleColor, setContentColor, editedTheme, motifs]);
 
   useEffect(() => {
     gettingTheme();
-  }, [editedTheme]);
+  }, [editedTheme, gettingTheme]);
 
   return (
     <Wrapper background={background}>

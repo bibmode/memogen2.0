@@ -93,21 +93,27 @@ const AddButton = styled(Box)(({ theme }) => ({
 
 const Home = () => {
   const navigate = useNavigate();
-  const { getData } = useContext(AppContext);
+  const { getData, theUser, logoutUser, isAuth } = useContext(AppContext);
 
   useEffect(() => {
     getData();
   }, [getData]);
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuth, navigate]);
 
   return (
     <ParentContainer>
       <Container sx={{ position: "relative", minHeight: "100vh" }}>
         <Header>
           <Typography id="greeting" component="h1" variant="h4">
-            Hello, Genevieve!
+            Hello, {theUser.name}!
           </Typography>
           <Tooltip title="Logout">
-            <IconButton onClick={() => navigate("/", { replace: true })}>
+            <IconButton onClick={logoutUser}>
               <LogoutIcon />
             </IconButton>
           </Tooltip>

@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AppContext } from "../App";
 
@@ -49,9 +49,14 @@ const NoteDetails = () => {
   const [background, setBackground] = useState("#fff");
 
   //to regain the notes original theme after save if the theme is not changed
+
+  const getEditedTheme = useCallback(() => {
+    setEditedTheme(currentNote[0].motif);
+  }, [currentNote, setEditedTheme]);
+
   useEffect(() => {
-    if (currentNote) setEditedTheme(currentNote[0].motif);
-  }, [currentNote]);
+    if (currentNote) getEditedTheme();
+  }, [currentNote, getEditedTheme]);
 
   useEffect(() => {
     if (notesData) {
@@ -66,11 +71,10 @@ const NoteDetails = () => {
       motif: currentNote && currentNote[0].motif,
     },
     onSubmit: () => {
-      const title = editedTitle !== "" ? editedTitle : currentNote[0].title;
-      const content =
-        editedContent !== "" ? editedContent : currentNote[0].content;
+      const title = editedTitle ? editedTitle : currentNote[0].title;
+      const content = editedContent ? editedContent : currentNote[0].content;
       const today = new Date();
-      const date = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+      const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
       const motif = editedTheme ? editedTheme : currentNote[0].motif;
 
       const entry = {
@@ -88,29 +92,39 @@ const NoteDetails = () => {
     },
   });
 
-  const gettingTheme = (themeToUse = null) => {
-    if (notesData && currentNote) {
-      let currentMotif;
-      if (!themeToUse) {
-        currentMotif = motifs.filter(
-          (motif) => motif[0] === currentNote[0].motif
-        );
-      } else {
-        currentMotif = motifs.filter((motif) => motif[0] === themeToUse);
+  const gettingTheme = useCallback(
+    (themeToUse = null) => {
+      if (notesData && currentNote) {
+        let currentMotif;
+        if (!themeToUse) {
+          currentMotif = motifs.filter(
+            (motif) => motif[0] === currentNote[0].motif
+          );
+        } else {
+          currentMotif = motifs.filter((motif) => motif[0] === themeToUse);
+        }
+        setBackground(currentMotif[0][2]);
+        setTitleColor(currentMotif[0][3]);
+        setContentColor(currentMotif[0][3]);
       }
-      setBackground(currentMotif[0][2]);
-      setTitleColor(currentMotif[0][3]);
-      setContentColor(currentMotif[0][3]);
-    }
-  };
+    },
+    [
+      setBackground,
+      setTitleColor,
+      setContentColor,
+      motifs,
+      currentNote,
+      notesData,
+    ]
+  );
 
   useEffect(() => {
     gettingTheme();
-  }, [currentNote]);
+  }, [currentNote, gettingTheme]);
 
   useEffect(() => {
     gettingTheme(editedTheme);
-  }, [editedTheme]);
+  }, [editedTheme, gettingTheme]);
 
   return (
     <>

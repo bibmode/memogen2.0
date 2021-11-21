@@ -1,8 +1,11 @@
 import { Button, Container, Link, TextField } from "@mui/material";
 import { Box, styled } from "@mui/system";
+import axios from "axios";
 import { useFormik } from "formik";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
+import { AppContext } from "../App";
 
 // form validation
 const validationSchema = yup.object({
@@ -43,19 +46,45 @@ const Form = styled(Box)(({ theme }) => ({
 }));
 
 const LoginForm = () => {
+  const { loginUser, isLoggedIn, isAuth } = useContext(AppContext);
+
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      email: "test@memogen.com",
+      email: "vievenavales29@gmail.com",
       password: "11111111",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      navigate("home", { replace: true });
+    onSubmit: async (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      // navigate("home", { replace: true });
+      console.log(values);
+      const data = await loginUser(values);
+      if (data.success && data.token) {
+        console.log(data);
+        localStorage.setItem("loginToken", data.token);
+        await isLoggedIn();
+      } else {
+        console.log("not successful", data);
+      }
     },
   });
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("home", { replace: true });
+    }
+  }, [isAuth, navigate]);
+
+  //testing the backend
+  // const axiosBackend = () => {
+  //   let formData = new FormData();
+  //   formData.append("content", "genevieve");
+  //   axios
+  //     .post("http://localhost/memogen-backend/api/demo.php", formData)
+  //     .then((res) => console.log(res.data));
+  // };
 
   return (
     <Form>
