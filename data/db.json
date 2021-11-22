@@ -1,10 +1,11 @@
 {
   "notes": [
     {
-      "title": "New note",
-      "content": "This note is for testing purposes<div>This is another line</div>",
-      "motif": "green",
-      "date": "10/17/2021",
+      "title": "My First Memo",
+      "content": "This is a test memo to see if the table succesfully connected",
+      "motif": "violet",
+      "date": "2021-10-22",
+      "user_id": "1",
       "id": 1
     },
     {
@@ -31,8 +32,8 @@
     {
       "title": "Add Titlewedf",
       "content": "Write Content...wedw3ed",
-      "motif": "green",
-      "date": "10/18/2021",
+      "motif": "pink",
+      "date": "2021-10-21",
       "id": 7
     },
     {

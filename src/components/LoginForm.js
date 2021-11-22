@@ -1,6 +1,5 @@
 import { Button, Container, Link, TextField } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
@@ -59,14 +58,13 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
       // navigate("home", { replace: true });
-      console.log(values);
       const data = await loginUser(values);
       if (data.success && data.token) {
-        console.log(data);
         localStorage.setItem("loginToken", data.token);
         await isLoggedIn();
+        // await getMemos(theUser.id);
       } else {
-        console.log("not successful", data);
+        alert("enter a valid email or password");
       }
     },
   });
@@ -76,6 +74,10 @@ const LoginForm = () => {
       navigate("home", { replace: true });
     }
   }, [isAuth, navigate]);
+
+  // useEffect(() => {
+  //   getMemos(theUser.id);
+  // }, [getMemos]);
 
   //testing the backend
   // const axiosBackend = () => {

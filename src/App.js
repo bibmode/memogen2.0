@@ -40,6 +40,10 @@ function App() {
   const [showThemes, setShowThemes] = useState(false);
   const [editedTheme, setEditedTheme] = useState("monochrome");
 
+  useEffect(() => {
+    console.log(notesData);
+  }, [notesData]);
+
   //log in
 
   // Root State
@@ -88,19 +92,45 @@ function App() {
       if (data.success && data.user) {
         setIsAuth(true);
         setTheUser(data.user);
+        console.log(data.user);
       } else {
         console.log("not successful");
       }
     }
   };
 
-  const getData = useCallback(() => {
-    fetch("http://localhost:8000/notes")
-      .then((res) => res.json())
-      .then((data) => {
-        setNotesData(data);
+  // const getData = useCallback(() => {
+  //   fetch("http://localhost:8000/notes")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setNotesData(data);
+  //       console.log(data);
+  //     });
+  // }, []);
+
+  const getMemos = useCallback((userId) => {
+    let formData = new FormData();
+    formData.append("id", userId);
+    console.log(userId);
+    axios
+      .get(
+        `http://localhost/memogen-backend/user-memos.php?id=${userId}`,
+        formData
+      )
+      .then((res) => {
+        console.log(res.data);
+        setNotesData(res.data);
       });
   }, []);
+
+  const updateMemo = (updateData) => {
+    axios
+      .put("http://localhost/memogen-backend/memo-update.php", updateData)
+      .then((res) => {
+        console.log(res);
+      });
+    console.log(updateData);
+  };
 
   const deleteNote = (noteId) => {
     fetch("http://localhost:8000/notes/" + noteId, {
@@ -108,9 +138,9 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    getData();
-  }, [getData]);
+  // useEffect(() => {
+  //   getData();
+  // }, [getData]);
 
   const motifs = [
     ["monochrome", grey[100], "#fff", "#000000DE"],
@@ -129,7 +159,7 @@ function App() {
         <AppContext.Provider
           value={{
             notesData,
-            getData,
+            // getData,
             deleteNote,
             showThemes,
             setShowThemes,
@@ -145,6 +175,9 @@ function App() {
             logoutUser,
             registerUser,
             isLoggedIn,
+            //memos
+            getMemos,
+            updateMemo,
           }}
         >
           <Router>

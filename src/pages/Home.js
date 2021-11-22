@@ -93,11 +93,15 @@ const AddButton = styled(Box)(({ theme }) => ({
 
 const Home = () => {
   const navigate = useNavigate();
-  const { getData, theUser, logoutUser, isAuth } = useContext(AppContext);
+  const { theUser, logoutUser, isAuth, getMemos } = useContext(AppContext);
+
+  // useEffect(() => {
+  //   getData();
+  // }, [getData]);
 
   useEffect(() => {
-    getData();
-  }, [getData]);
+    getMemos(theUser.id);
+  }, [getMemos, theUser]);
 
   useEffect(() => {
     if (!isAuth) {

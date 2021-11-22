@@ -55,7 +55,7 @@ const NotesGrid = () => {
                 backgroundColor={getBackground(note.motif)}
                 textColor={getText(note.motif)}
               >
-                <Link id="title" to={`/note/${note.id}`}>
+                <Link id="title" to={`/note/${note.memo_id}`}>
                   {note.title}
                 </Link>
                 <p id="content">
