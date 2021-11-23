@@ -93,11 +93,8 @@ const AddButton = styled(Box)(({ theme }) => ({
 
 const Home = () => {
   const navigate = useNavigate();
-  const { theUser, logoutUser, isAuth, getMemos } = useContext(AppContext);
-
-  // useEffect(() => {
-  //   getData();
-  // }, [getData]);
+  const { theUser, logoutUser, isAuth, getMemos, notesData } =
+    useContext(AppContext);
 
   useEffect(() => {
     getMemos(theUser.id);
@@ -135,7 +132,7 @@ const Home = () => {
 
         <TypeNavigation />
 
-        <NotesGrid />
+        {notesData && <NotesGrid />}
         <AddButton>
           <Tooltip title="Add new note" placement="left">
             <SpeedDial

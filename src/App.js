@@ -39,6 +39,7 @@ function App() {
   const [notesData, setNotesData] = useState(null);
   const [showThemes, setShowThemes] = useState(false);
   const [editedTheme, setEditedTheme] = useState("monochrome");
+  const [signInToggle, setSignInToggle] = useState(true);
 
   //log in
 
@@ -52,8 +53,11 @@ function App() {
     setIsAuth(false);
   };
 
+  const switchForm = () => {
+    setSignInToggle(!signInToggle);
+  };
+
   const registerUser = async (user) => {
-    // Sending the user registration request
     const register = await Axios.post("register.php", {
       name: user.name,
       email: user.email,
@@ -94,15 +98,6 @@ function App() {
     }
   };
 
-  // const getData = useCallback(() => {
-  //   fetch("http://localhost:8000/notes")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setNotesData(data);
-  //       console.log(data);
-  //     });
-  // }, []);
-
   const getMemos = useCallback((userId) => {
     let formData = new FormData();
     formData.append("id", userId);
@@ -112,13 +107,17 @@ function App() {
         formData
       )
       .then((res) => {
-        setNotesData(res.data);
+        if (res.data[0]) {
+          setNotesData(res.data);
+          console.log(res.data);
+        } else {
+          setNotesData(null);
+        }
       });
   }, []);
 
   const updateMemo = (updateData) => {
     axios.put("http://localhost/memogen-backend/memo-update.php", updateData);
-    console.log(updateData);
   };
 
   const insertMemo = (newData) => {
@@ -130,10 +129,6 @@ function App() {
       data: { id: memoId },
     });
   };
-
-  // useEffect(() => {
-  //   getData();
-  // }, [getData]);
 
   const motifs = [
     ["monochrome", grey[100], "#fff", "#000000DE"],
@@ -152,6 +147,7 @@ function App() {
         <AppContext.Provider
           value={{
             notesData,
+            setNotesData,
             // getData,
             showThemes,
             setShowThemes,
@@ -167,6 +163,9 @@ function App() {
             logoutUser,
             registerUser,
             isLoggedIn,
+            signInToggle,
+            setSignInToggle,
+            switchForm,
             //memos
             getMemos,
             updateMemo,

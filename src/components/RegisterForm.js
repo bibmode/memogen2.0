@@ -8,6 +8,7 @@ import { AppContext } from "../App";
 
 // form validation
 const validationSchema = yup.object({
+  name: yup.string("Enter your username").required("Username is required"),
   email: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -44,23 +45,22 @@ const Form = styled(Box)(({ theme }) => ({
   },
 }));
 
-const LoginForm = () => {
-  const { loginUser, isLoggedIn, isAuth, switchForm } = useContext(AppContext);
+const RegisterForm = () => {
+  const { registerUser, isAuth, switchForm } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      email: "ceciliamother@gmail.com",
-      password: "33333333",
+      name: "",
+      email: "",
+      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const data = await loginUser(values);
-      console.log(data.success, data.token);
-      if (data.success && data.token) {
-        localStorage.setItem("loginToken", data.token);
-        await isLoggedIn();
+      const data = await registerUser(values);
+      if (data.success) {
+        alert("you have successfully registered!");
       } else {
         alert("enter a valid email or password");
       }
@@ -78,6 +78,17 @@ const LoginForm = () => {
       <img id="pushpin" src="images/pushpin.png" alt="pushpin" />
       <Container>
         <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            id="name"
+            name="name"
+            label="Username"
+            variant="standard"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
+          />
           <TextField
             fullWidth
             id="email"
@@ -108,15 +119,15 @@ const LoginForm = () => {
             id="submitBtn"
             disableElevation
           >
-            LOGIN
+            Sign up
           </Button>
         </form>
         <Link onClick={switchForm} underline="hover" color="GrayText">
-          No account, yet? REGISTER here!
+          Already registered? LOGIN here!
         </Link>
       </Container>
     </Form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

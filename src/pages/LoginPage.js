@@ -1,8 +1,11 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { styled } from "@mui/system";
+import { useContext } from "react";
+import { AppContext } from "../App";
 import LoginForm from "../components/LoginForm";
 import Quote from "../components/Quote";
+import RegisterForm from "../components/RegisterForm";
 
 const Background = styled("div")(({ theme }) => ({
   backgroundColor: amber[50],
@@ -24,6 +27,8 @@ const Wrapper = styled(Container)(({ theme }) => ({
 }));
 
 const LoginPage = () => {
+  const { signInToggle } = useContext(AppContext);
+
   return (
     <Background>
       <Wrapper>
@@ -35,7 +40,7 @@ const LoginPage = () => {
             <Quote />
           </Grid>
           <Grid id="formContainer" item xs={12} md={5}>
-            <LoginForm />
+            {signInToggle ? <LoginForm /> : <RegisterForm />}
           </Grid>
         </Grid>
       </Wrapper>

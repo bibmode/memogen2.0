@@ -23,7 +23,6 @@ const ThemesBar = () => {
 
   const checkMotif = (motifArr) => {
     setEditedTheme(motifArr[0]);
-    console.log(motifArr[0]);
   };
 
   return (
