@@ -7,11 +7,11 @@ import { useNavigate } from "react-router";
 
 const ToolsSpeedDial = ({ actions, noteId }) => {
   const navigate = useNavigate();
-  const { deleteNote, setShowThemes, showThemes } = useContext(AppContext);
+  const { deleteMemo, setShowThemes, showThemes } = useContext(AppContext);
 
   const getActionType = (el) => {
     if (el === "Delete") {
-      deleteNote(noteId);
+      deleteMemo(noteId);
       navigate("/home");
     }
     if (el === "Themes") {

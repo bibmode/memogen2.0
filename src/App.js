@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -39,10 +39,6 @@ function App() {
   const [notesData, setNotesData] = useState(null);
   const [showThemes, setShowThemes] = useState(false);
   const [editedTheme, setEditedTheme] = useState("monochrome");
-
-  useEffect(() => {
-    console.log(notesData);
-  }, [notesData]);
 
   //log in
 
@@ -92,7 +88,6 @@ function App() {
       if (data.success && data.user) {
         setIsAuth(true);
         setTheUser(data.user);
-        console.log(data.user);
       } else {
         console.log("not successful");
       }
@@ -111,30 +106,28 @@ function App() {
   const getMemos = useCallback((userId) => {
     let formData = new FormData();
     formData.append("id", userId);
-    console.log(userId);
     axios
       .get(
         `http://localhost/memogen-backend/user-memos.php?id=${userId}`,
         formData
       )
       .then((res) => {
-        console.log(res.data);
         setNotesData(res.data);
       });
   }, []);
 
   const updateMemo = (updateData) => {
-    axios
-      .put("http://localhost/memogen-backend/memo-update.php", updateData)
-      .then((res) => {
-        console.log(res);
-      });
+    axios.put("http://localhost/memogen-backend/memo-update.php", updateData);
     console.log(updateData);
   };
 
-  const deleteNote = (noteId) => {
-    fetch("http://localhost:8000/notes/" + noteId, {
-      method: "DELETE",
+  const insertMemo = (newData) => {
+    axios.post("http://localhost/memogen-backend/memo-insert.php", newData);
+  };
+
+  const deleteMemo = (memoId) => {
+    axios.delete("http://localhost/memogen-backend/memo-delete.php", {
+      data: { id: memoId },
     });
   };
 
@@ -160,7 +153,6 @@ function App() {
           value={{
             notesData,
             // getData,
-            deleteNote,
             showThemes,
             setShowThemes,
             motifs,
@@ -178,6 +170,8 @@ function App() {
             //memos
             getMemos,
             updateMemo,
+            insertMemo,
+            deleteMemo,
           }}
         >
           <Router>

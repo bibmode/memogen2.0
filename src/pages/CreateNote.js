@@ -28,7 +28,8 @@ const Containment = styled(Container)(() => ({
 }));
 
 const CreateNote = () => {
-  const { editedTheme, motifs, setEditedTheme } = useContext(AppContext);
+  const { editedTheme, motifs, setEditedTheme, insertMemo, theUser } =
+    useContext(AppContext);
   const actions = [
     { icon: <ContentCopyIcon />, name: "Copy" },
     { icon: <LooksIcon />, name: "Themes" },
@@ -62,18 +63,16 @@ const CreateNote = () => {
       const today = new Date();
       const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
       const motif = editedTheme;
+      const user = Number(theUser.id);
       const entry = {
         title,
         content,
         motif,
         date,
+        user,
       };
       if (title !== null || content !== null) {
-        fetch("http://localhost:8000/notes", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(entry),
-        });
+        insertMemo(entry);
       } else {
         alert("Fill the content and title before saving!");
       }

@@ -56,8 +56,6 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      // navigate("home", { replace: true });
       const data = await loginUser(values);
       if (data.success && data.token) {
         localStorage.setItem("loginToken", data.token);

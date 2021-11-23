@@ -13,7 +13,6 @@ import { useFormik } from "formik";
 import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
-import axios from "axios";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -88,12 +87,6 @@ const NoteDetails = () => {
         date,
         user_id,
       };
-
-      // fetch("http://localhost:8000/notes/" + id, {
-      //   method: "PUT",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(entry),
-      // });
       updateMemo(entry);
     },
   });
@@ -154,7 +147,7 @@ const NoteDetails = () => {
               handleSubmit={() => formik.handleSubmit()}
               noteTitle={editedTitle}
               noteContent={editedContent}
-              noteId={id}
+              noteId={Number(currentNote[0].memo_id)}
             />
           </Containment>
         </Wrapper>
