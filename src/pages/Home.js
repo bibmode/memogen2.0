@@ -2,7 +2,6 @@ import {
   Container,
   IconButton,
   Typography,
-  InputBase,
   Tooltip,
   SpeedDial,
 } from "@mui/material";
@@ -11,7 +10,6 @@ import { grey } from "@mui/material/colors";
 
 // icons
 import LogoutIcon from "@mui/icons-material/Logout";
-import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 
 import NotesGrid from "../components/NotesGrid";
@@ -20,6 +18,7 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 
 import { useNavigate } from "react-router";
+import Search from "../components/Search";
 
 const ParentContainer = styled("div")(({ theme }) => ({
   backgroundColor: grey[100],
@@ -35,45 +34,6 @@ const Header = styled("header")(({ theme }) => ({
     [theme.breakpoints.up("sm")]: {
       marginLeft: 50,
     },
-  },
-}));
-
-const Search = styled("div")(({ theme }) => ({
-  display: "flex",
-  position: "relative",
-  border: "1.5px solid #bdbdbd",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.common.white,
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: "50%",
-    transform: "translateX(-50%)",
-    width: "70%",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  flexGrow: 1,
-  marginLeft: 0,
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
   },
 }));
 
@@ -120,15 +80,7 @@ const Home = () => {
           </Tooltip>
         </Header>
 
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search notes…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        <Search />
 
         <TypeNavigation />
 

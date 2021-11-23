@@ -107,14 +107,20 @@ function App() {
         formData
       )
       .then((res) => {
-        if (res.data[0]) {
-          setNotesData(res.data);
-          console.log(res.data);
-        } else {
-          setNotesData(null);
-        }
+        res.data[0] ? setNotesData(res.data) : setNotesData(null);
       });
   }, []);
+
+  const searchMemos = (searchInput) => {
+    axios
+      .get(
+        `http://localhost/memogen-backend/memo-search.php?id=${theUser.id}&search=${searchInput}`
+      )
+      .then((res) => {
+        if (res.data[0]) setNotesData(res.data);
+        else console.log("no data found");
+      });
+  };
 
   const updateMemo = (updateData) => {
     axios.put("http://localhost/memogen-backend/memo-update.php", updateData);
@@ -171,6 +177,7 @@ function App() {
             updateMemo,
             insertMemo,
             deleteMemo,
+            searchMemos,
           }}
         >
           <Router>

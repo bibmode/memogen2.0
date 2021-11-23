@@ -51,13 +51,12 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "ceciliamother@gmail.com",
-      password: "33333333",
+      email: "gen@gmail.com",
+      password: "11111111",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const data = await loginUser(values);
-      console.log(data.success, data.token);
       if (data.success && data.token) {
         localStorage.setItem("loginToken", data.token);
         await isLoggedIn();

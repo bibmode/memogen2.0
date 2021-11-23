@@ -1,6 +1,6 @@
 import { Card, Grid } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../App";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
