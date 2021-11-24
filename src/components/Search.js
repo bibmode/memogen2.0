@@ -1,4 +1,3 @@
-import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
 import { styled } from "@mui/system";
 import { useContext } from "react";
@@ -12,6 +11,9 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  img: {
+    width: 18,
+  },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -52,7 +54,7 @@ const Search = () => {
   return (
     <Wrapper>
       <SearchIconWrapper>
-        <SearchIcon />
+        <img src="images/🔍.svg" alt="search icon" />
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search notes…"

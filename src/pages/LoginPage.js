@@ -7,7 +7,7 @@ import LoginForm from "../components/LoginForm";
 import Quote from "../components/Quote";
 import RegisterForm from "../components/RegisterForm";
 
-const Background = styled("div")(({ theme }) => ({
+const Background = styled("div")(() => ({
   backgroundColor: amber[50],
   minHeight: "100vh",
 }));
@@ -26,15 +26,27 @@ const Wrapper = styled(Container)(({ theme }) => ({
   },
 }));
 
+const PageTitle = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  img: {
+    paddingRight: theme.spacing(1),
+  },
+}));
+
 const LoginPage = () => {
   const { signInToggle } = useContext(AppContext);
 
   return (
     <Background>
       <Wrapper>
-        <Typography fontSize="24px" fontWeight="fontWeightBold">
-          💡 memogen
-        </Typography>
+        <PageTitle>
+          <img src="images/💡.svg" alt="light bulb" />
+          <Typography fontSize="24px" fontWeight="fontWeightBold">
+            memogen
+          </Typography>
+        </PageTitle>
+
         <Grid container alignItems="center">
           <Grid id="quoteContainer" item xs={0} md={7}>
             <Quote />

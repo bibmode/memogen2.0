@@ -1,14 +1,15 @@
 import { IconButton, Tooltip } from "@mui/material";
 import { styled } from "@mui/system";
 
-import LooksIcon from "@mui/icons-material/Looks";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import LooksIcon from "@mui/icons-material/Looks";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useContext } from "react";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router";
+import CustomIcon from "./CustomIcon";
 
-const Wrapper = styled("div")((props) => ({
+const Wrapper = styled("div")(() => ({
   display: "flex",
   justifyContent: "right",
   alignItems: "flex-end",
@@ -31,12 +32,12 @@ const Tools = ({ noteId }) => {
     <Wrapper>
       <Tooltip title="Theme">
         <IconButton onClick={openMotifs}>
-          <LooksIcon />
+          <CustomIcon path="/images/🌈.svg" altName="rainbow icon" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete">
         <IconButton onClick={deleteNote}>
-          <DeleteIcon />
+          <CustomIcon path="/images/🗑️.svg" altName="bin icon" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Copy">

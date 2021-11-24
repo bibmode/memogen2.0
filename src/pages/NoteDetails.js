@@ -19,7 +19,7 @@ const Wrapper = styled("div")((props) => ({
   backgroundColor: props.background,
 }));
 
-const Containment = styled(Container)(({ theme }) => ({
+const Containment = styled(Container)(() => ({
   position: "relative",
   height: "100%",
 }));

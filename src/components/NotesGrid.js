@@ -1,9 +1,10 @@
-import { Card, Grid } from "@mui/material";
+import { Card, Grid, IconButton } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useContext } from "react";
 import { AppContext } from "../App";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
+import CustomIcon from "./CustomIcon";
 
 const Note = styled(Card)((props) => ({
   padding: 30,
@@ -29,11 +30,24 @@ const Note = styled(Card)((props) => ({
     "-webkit-box-orient": "vertical",
     overflow: "hidden",
     color: props.textColor,
+    marginBottom: 5,
+  },
+}));
+
+const NoteFooter = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+}));
+
+const DeleteBtn = styled(IconButton)(() => ({
+  img: {
+    height: 16,
   },
 }));
 
 const NotesGrid = () => {
-  const { notesData, motifs } = useContext(AppContext);
+  const { notesData, motifs, deleteMemo, theUser, getMemos } =
+    useContext(AppContext);
 
   const getBackground = (theme) => {
     const background = motifs.filter((motif) => motif[0] === theme);
@@ -43,6 +57,12 @@ const NotesGrid = () => {
   const getText = (theme) => {
     const background = motifs.filter((motif) => motif[0] === theme);
     return `${background[0][3]} !important`;
+  };
+
+  const handleDelete = (id) => {
+    deleteMemo(id);
+    console.log(theUser);
+    getMemos(Number(theUser.id));
   };
 
   return (
@@ -65,7 +85,16 @@ const NotesGrid = () => {
                       .replace(/<\/div>/g, "<br>")
                   )}
                 </p>
-                <p>{note.date}</p>
+                <NoteFooter>
+                  <p>{note.date}</p>
+                  <DeleteBtn onClick={() => handleDelete(note.memo_id)}>
+                    <CustomIcon
+                      id="icon"
+                      path="/images/🗑️.svg"
+                      altName="bin icon"
+                    />
+                  </DeleteBtn>
+                </NoteFooter>
               </Note>
             </Grid>
           ))}

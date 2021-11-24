@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
-const Container = styled("div")(({ theme }) => ({
+const Container = styled("div")(() => ({
   width: "100%",
   height: "56px",
   display: "flex",

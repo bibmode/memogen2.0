@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 import Tools from "./Tools";
 
-const Title = styled(Typography)(({ theme }, props) => ({
+const Title = styled(Typography)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(2),
   ":focus": {
@@ -16,12 +16,12 @@ const Title = styled(Typography)(({ theme }, props) => ({
   color: (props) => props.color,
 }));
 
-const TitleToolWrap = styled("div")(({ theme }) => ({
+const TitleToolWrap = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
 }));
 
-const Content = styled(Typography)((props) => ({
+const Content = styled(Typography)(({ theme }) => ({
   color: (props) => props.color,
   textAlign: "left",
   fontSize: "18px",
@@ -29,6 +29,7 @@ const Content = styled(Typography)((props) => ({
   outline: "none",
   border: "none",
   width: "100%",
+  paddingBlock: theme.spacing(3),
   ":focus": {
     outline: "none",
     border: "none",

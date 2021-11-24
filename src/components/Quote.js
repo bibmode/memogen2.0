@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 
-const Wrapper = styled("div")(({ theme }) => ({
+const Wrapper = styled("div")(() => ({
   minHeight: "80vh",
   display: "flex",
   alignContent: "center",
