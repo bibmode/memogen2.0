@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import ThemesBar from "./ThemesBar";
 import { useContext } from "react";
 import { AppContext } from "../App";
+import Tools from "./Tools";
 
 const Title = styled(Typography)(({ theme }, props) => ({
   paddingTop: theme.spacing(3),
@@ -13,6 +14,11 @@ const Title = styled(Typography)(({ theme }, props) => ({
     border: "none",
   },
   color: (props) => props.color,
+}));
+
+const TitleToolWrap = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
 }));
 
 const Content = styled(Typography)((props) => ({
@@ -41,17 +47,21 @@ const EditableFields = ({
 
   return (
     <>
-      <Title
-        variant="h4"
-        fontWeight="medium"
-        textAlign="left"
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        onInput={editTitle}
-        color={titleColor}
-      >
-        {currentNote ? currentNote[0].title : initialValues[0]}
-      </Title>
+      <TitleToolWrap>
+        <Title
+          variant="h4"
+          fontWeight="medium"
+          textAlign="left"
+          contentEditable={true}
+          suppressContentEditableWarning={true}
+          onInput={editTitle}
+          color={titleColor}
+        >
+          {currentNote ? currentNote[0].title : initialValues[0]}
+        </Title>
+        <Tools noteId={currentNote ? currentNote[0].memo_id : null} />
+      </TitleToolWrap>
+
       {showThemes && <ThemesBar />}
       <Content
         role="textarea"

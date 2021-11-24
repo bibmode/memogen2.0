@@ -5,7 +5,9 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import { AppContext } from "../App";
 
-const Wrapper = styled(Box)(({ theme }) => ({}));
+const Wrapper = styled(Box)(({ theme }) => ({
+  paddingBlock: theme.spacing(2),
+}));
 
 const Motif = styled("button")((props) => ({
   backgroundColor: props.color,

@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
-import ToolsSpeedDial from "./ToolsSpeedDial";
 
 const Container = styled("div")(({ theme }) => ({
   width: "100%",
@@ -17,13 +16,7 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const NoteForm = ({
-  actions,
-  handleSubmit,
-  noteTitle,
-  noteContent,
-  noteId,
-}) => {
+const NoteForm = ({ handleSubmit, noteTitle, noteContent }) => {
   return (
     <Container>
       <form
@@ -38,8 +31,6 @@ const NoteForm = ({
           Save
         </Button>
       </form>
-
-      <ToolsSpeedDial actions={actions} noteId={noteId} />
     </Container>
   );
 };

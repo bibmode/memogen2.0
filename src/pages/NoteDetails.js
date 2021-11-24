@@ -4,15 +4,11 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AppContext } from "../App";
 
-import LooksIcon from "@mui/icons-material/Looks";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ShareIcon from "@mui/icons-material/Share";
-
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useFormik } from "formik";
 import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
+import SavedMessage from "../components/SavedMessage";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -33,16 +29,10 @@ const NoteDetails = () => {
   const { notesData, motifs, editedTheme, setEditedTheme, updateMemo } =
     useContext(AppContext);
 
-  const actions = [
-    { icon: <ContentCopyIcon />, name: "Copy" },
-    { icon: <LooksIcon />, name: "Themes" },
-    { icon: <DeleteIcon />, name: "Delete" },
-    { icon: <ShareIcon />, name: "Share" },
-  ];
-
   const [currentNote, setCurrentNote] = useState(null);
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
+  const [showSaved, setShowSaved] = useState(false);
 
   const [titleColor, setTitleColor] = useState(null);
   const [contentColor, setContentColor] = useState(null);
@@ -88,8 +78,15 @@ const NoteDetails = () => {
         user_id,
       };
       updateMemo(entry);
+      setShowSaved(true);
     },
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSaved(false);
+    }, 3000);
+  }, [showSaved]);
 
   const gettingTheme = useCallback(
     (themeToUse = null) => {
@@ -129,6 +126,7 @@ const NoteDetails = () => {
     <>
       {currentNote && (
         <Wrapper background={background}>
+          {showSaved && <SavedMessage />}
           <Containment id="container">
             <HomeButton />
 
@@ -143,11 +141,9 @@ const NoteDetails = () => {
             />
 
             <NoteForm
-              actions={actions}
               handleSubmit={() => formik.handleSubmit()}
               noteTitle={editedTitle}
               noteContent={editedContent}
-              noteId={Number(currentNote[0].memo_id)}
             />
           </Containment>
         </Wrapper>

@@ -12,6 +12,8 @@ import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
 import { AppContext } from "../App";
+import SavedMessage from "../components/SavedMessage";
+import { useNavigate } from "react-router";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -28,8 +30,26 @@ const Containment = styled(Container)(() => ({
 }));
 
 const CreateNote = () => {
-  const { editedTheme, motifs, setEditedTheme, insertMemo, theUser } =
-    useContext(AppContext);
+  const {
+    editedTheme,
+    motifs,
+    setEditedTheme,
+    insertMemo,
+    theUser,
+    notesData,
+    setNotesData,
+  } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  const nullifyNotes = useCallback(() => {
+    setNotesData(null);
+  }, [setNotesData]);
+
+  useEffect(() => {
+    nullifyNotes();
+  }, [nullifyNotes]);
+
   const actions = [
     { icon: <ContentCopyIcon />, name: "Copy" },
     { icon: <LooksIcon />, name: "Themes" },
@@ -40,6 +60,7 @@ const CreateNote = () => {
   const [titleColor, setTitleColor] = useState(null);
   const [contentColor, setContentColor] = useState(null);
   const [background, setBackground] = useState("#fff");
+  const [showSaved, setShowSaved] = useState(false);
 
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
@@ -73,11 +94,29 @@ const CreateNote = () => {
       };
       if (title !== null || content !== null) {
         insertMemo(entry);
+        setShowSaved(true);
       } else {
         alert("Fill the content and title before saving!");
       }
     },
   });
+
+  const goToNewMemo = useCallback(() => {
+    const memoId = notesData[notesData.length - 1].memo_id;
+    navigate(`/note/${memoId}`, { replace: true });
+  }, [navigate, notesData]);
+
+  useEffect(() => {
+    if (showSaved && notesData) {
+      goToNewMemo();
+    }
+  }, [notesData, goToNewMemo, showSaved]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSaved(false);
+    }, 3000);
+  }, [showSaved]);
 
   const gettingTheme = useCallback(() => {
     let currentMotif = motifs.filter((motif) => motif[0] === editedTheme);
@@ -92,6 +131,7 @@ const CreateNote = () => {
 
   return (
     <Wrapper background={background}>
+      {showSaved && <SavedMessage />}
       <Containment id="container">
         <HomeButton label="Cancel" />
 

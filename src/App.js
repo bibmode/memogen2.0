@@ -118,7 +118,6 @@ function App() {
       )
       .then((res) => {
         if (res.data[0]) setNotesData(res.data);
-        else console.log("no data found");
       });
   };
 
@@ -127,7 +126,11 @@ function App() {
   };
 
   const insertMemo = (newData) => {
-    axios.post("http://localhost/memogen-backend/memo-insert.php", newData);
+    axios
+      .post("http://localhost/memogen-backend/memo-insert.php", newData)
+      .then((res) => {
+        if (res.data[0]) setNotesData(res.data);
+      });
   };
 
   const deleteMemo = (memoId) => {
