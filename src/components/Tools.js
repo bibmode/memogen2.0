@@ -18,10 +18,16 @@ const Wrapper = styled("div")(() => ({
 const Tools = ({ noteId }) => {
   const navigate = useNavigate();
 
-  const { showThemes, setShowThemes, deleteMemo } = useContext(AppContext);
+  const { showThemes, setShowThemes, deleteMemo, theUser } =
+    useContext(AppContext);
+
   const deleteNote = () => {
-    if (noteId) deleteMemo(noteId);
-    navigate("/home");
+    if (Number(theUser.id) !== 8) {
+      if (noteId) deleteMemo(noteId);
+      navigate("/home");
+    } else {
+      alert("create an account to use this feature!");
+    }
   };
 
   const openMotifs = () => {

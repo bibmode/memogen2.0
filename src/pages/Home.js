@@ -14,11 +14,13 @@ import CreateIcon from "@mui/icons-material/Create";
 
 import NotesGrid from "../components/NotesGrid";
 import TypeNavigation from "../components/TypeNavigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 
 import { useNavigate } from "react-router";
 import Search from "../components/Search";
+import TodoList from "../components/TodoList";
+import AddTodoDialog from "../components/AddTodoDialog";
 
 const ParentContainer = styled("div")(({ theme }) => ({
   backgroundColor: grey[100],
@@ -53,18 +55,47 @@ const AddButton = styled(Box)(({ theme }) => ({
 
 const Home = () => {
   const navigate = useNavigate();
-  const { theUser, logoutUser, isAuth, getMemos, notesData } =
-    useContext(AppContext);
+  const {
+    theUser,
+    logoutUser,
+    isAuth,
+    getMemos,
+    getTodos,
+    todosData,
+    getActives,
+    getCompleted,
+    toggleMemoTodo,
+    setToggleAddTodo,
+  } = useContext(AppContext);
 
   useEffect(() => {
     getMemos(theUser.id);
   }, [getMemos, theUser]);
 
   useEffect(() => {
+    getTodos(theUser.id);
+  }, []);
+
+  useEffect(() => {
+    getActives();
+    getCompleted();
+  }, [todosData]);
+
+  useEffect(() => {
     if (!isAuth) {
       navigate("/", { replace: true });
     }
   }, [isAuth, navigate]);
+
+  const handleAddClick = () => {
+    if (toggleMemoTodo) {
+      if (Number(theUser.id) === 8)
+        alert("create an account to access this feature");
+      else navigate("/create", { replace: true });
+    } else {
+      setToggleAddTodo(true);
+    }
+  };
 
   return (
     <ParentContainer>
@@ -84,18 +115,23 @@ const Home = () => {
 
         <TypeNavigation />
 
-        {notesData && <NotesGrid />}
+        {toggleMemoTodo ? <NotesGrid /> : <TodoList />}
+
         <AddButton>
-          <Tooltip title="Add new note" placement="left">
+          <Tooltip
+            title={toggleMemoTodo ? "Add new note" : "Add new task"}
+            placement="left"
+          >
             <SpeedDial
               ariaLabel="SpeedDial openIcon example"
               icon={<CreateIcon />}
-              onClick={() => navigate("/create", { replace: true })}
+              onClick={handleAddClick}
               sx={{ m: 0 }}
             ></SpeedDial>
           </Tooltip>
         </AddButton>
       </Container>
+      <AddTodoDialog />
     </ParentContainer>
   );
 };

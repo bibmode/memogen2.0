@@ -1,4 +1,4 @@
-import { Card, Grid, IconButton } from "@mui/material";
+import { Card, Grid, IconButton, Tooltip } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useContext } from "react";
 import { AppContext } from "../App";
@@ -60,9 +60,12 @@ const NotesGrid = () => {
   };
 
   const handleDelete = (id) => {
-    deleteMemo(id);
-    console.log(theUser);
-    getMemos(Number(theUser.id));
+    if (Number(theUser.id) === 8)
+      alert("create an account to access this feature");
+    else {
+      deleteMemo(id);
+      getMemos(Number(theUser.id));
+    }
   };
 
   return (
@@ -87,13 +90,15 @@ const NotesGrid = () => {
                 </p>
                 <NoteFooter>
                   <p>{note.date}</p>
-                  <DeleteBtn onClick={() => handleDelete(note.memo_id)}>
-                    <CustomIcon
-                      id="icon"
-                      path="/images/🗑️.svg"
-                      altName="bin icon"
-                    />
-                  </DeleteBtn>
+                  <Tooltip title="Delete">
+                    <DeleteBtn onClick={() => handleDelete(note.memo_id)}>
+                      <CustomIcon
+                        id="icon"
+                        path="/images/🗑️.svg"
+                        altName="bin icon"
+                      />
+                    </DeleteBtn>
+                  </Tooltip>
                 </NoteFooter>
               </Note>
             </Grid>

@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 const Wrapper = styled(Icon)(() => ({
   textAlign: "center",
   img: {
-    height: "85%",
+    height: "80%",
     width: "auto",
   },
 }));

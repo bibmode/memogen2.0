@@ -11,8 +11,8 @@ const Wrapper = styled("div")(({ theme }) => ({
   paddingInline: theme.spacing(2),
 }));
 
-const SavedMessage = () => {
-  return <Wrapper>Note Saved</Wrapper>;
+const MessageAlert = ({ message }) => {
+  return <Wrapper>{message}</Wrapper>;
 };
 
-export default SavedMessage;
+export default MessageAlert;

@@ -26,6 +26,15 @@ const theme = createTheme({
       main: yellow["A700"],
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 806,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 export const AppContext = createContext(null);
@@ -98,6 +107,7 @@ function App() {
     }
   };
 
+  // Memos functions
   const getMemos = useCallback((userId) => {
     let formData = new FormData();
     formData.append("id", userId);
@@ -150,6 +160,80 @@ function App() {
     ["pink", pink[100], pink[50], pink[600]],
   ];
 
+  //Todos functions
+  const [toggleMemoTodo, setToggleMemoTodo] = useState(true);
+  const [todosData, setTodosData] = useState(null); //true for memo, false for todo
+  const [completedTodos, setCompletedTodos] = useState(null);
+  const [activeTodos, setActiveTodos] = useState(null);
+  const [toggleAddTodo, setToggleAddTodo] = useState(false);
+
+  const getTodos = useCallback((userId) => {
+    let formData = new FormData();
+    formData.append("id", userId);
+    axios
+      .get(
+        `http://localhost/memogen-backend/user-todos.php?id=${userId}`,
+        formData
+      )
+      .then((res) => {
+        res.data[0] ? setTodosData(res.data) : setTodosData(null);
+      });
+  }, []);
+
+  const updateTodo = (updateData) => {
+    axios
+      .put("http://localhost/memogen-backend/todo-update.php", updateData)
+      .then((res) => {
+        getTodos(Number(theUser.id));
+      });
+  };
+
+  const deleteTodo = (todoId) => {
+    axios
+      .delete("http://localhost/memogen-backend/todo-delete.php", {
+        data: { id: todoId },
+      })
+      .then((res) => {
+        getTodos(Number(theUser.id));
+      });
+  };
+
+  const insertTodo = (newData) => {
+    axios
+      .post("http://localhost/memogen-backend/todo-insert.php", newData)
+      .then((res) => {
+        if (res.data[0]) setTodosData(res.data);
+      });
+  };
+
+  const handleCheckbox = (todo) => {
+    const todo_id = Number(todo.todo_id);
+    const user_id = Number(todo.user_id);
+    const content = todo.content;
+    const status = todo.status === "active" ? "completed" : "active";
+    const entry = {
+      todo_id,
+      user_id,
+      content,
+      status,
+    };
+    updateTodo(entry);
+  };
+
+  const getActives = () => {
+    const actives = todosData
+      ? todosData.filter((todo) => todo.status === "active")
+      : null;
+    setActiveTodos(actives);
+  };
+
+  const getCompleted = () => {
+    const completed = todosData
+      ? todosData.filter((todo) => todo.status === "completed")
+      : null;
+    setCompletedTodos(completed);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -175,12 +259,30 @@ function App() {
             signInToggle,
             setSignInToggle,
             switchForm,
+            toggleMemoTodo,
+            setToggleMemoTodo,
             //memos
             getMemos,
             updateMemo,
             insertMemo,
             deleteMemo,
             searchMemos,
+            //todos
+            todosData,
+            setTodosData,
+            getTodos,
+            completedTodos,
+            setCompletedTodos,
+            updateTodo,
+            deleteTodo,
+            insertTodo,
+            handleCheckbox,
+            activeTodos,
+            setActiveTodos,
+            getActives,
+            getCompleted,
+            toggleAddTodo,
+            setToggleAddTodo,
           }}
         >
           <Router>

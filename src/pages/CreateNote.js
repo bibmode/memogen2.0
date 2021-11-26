@@ -12,8 +12,8 @@ import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
 import { AppContext } from "../App";
-import SavedMessage from "../components/SavedMessage";
 import { useNavigate } from "react-router";
+import MessageAlert from "../components/MessageAlert";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -61,6 +61,7 @@ const CreateNote = () => {
   const [contentColor, setContentColor] = useState(null);
   const [background, setBackground] = useState("#fff");
   const [showSaved, setShowSaved] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
@@ -92,11 +93,11 @@ const CreateNote = () => {
         date,
         user,
       };
-      if (title !== null || content !== null) {
+      if (title.trim() !== "" && content.trim() !== "") {
         insertMemo(entry);
         setShowSaved(true);
       } else {
-        alert("Fill the content and title before saving!");
+        setShowError(true);
       }
     },
   });
@@ -118,6 +119,12 @@ const CreateNote = () => {
     }, 3000);
   }, [showSaved]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+  }, [showError]);
+
   const gettingTheme = useCallback(() => {
     let currentMotif = motifs.filter((motif) => motif[0] === editedTheme);
     setBackground(currentMotif[0][2]);
@@ -131,7 +138,10 @@ const CreateNote = () => {
 
   return (
     <Wrapper background={background}>
-      {showSaved && <SavedMessage />}
+      {showSaved && <MessageAlert message="Note Saved!" />}
+      {showError && (
+        <MessageAlert message="Fill the content and title before saving!" />
+      )}
       <Containment id="container">
         <HomeButton label="Cancel" />
 

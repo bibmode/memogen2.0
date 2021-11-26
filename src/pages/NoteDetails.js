@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
-import SavedMessage from "../components/SavedMessage";
+import MessageAlert from "../components/MessageAlert";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -33,6 +33,7 @@ const NoteDetails = () => {
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
   const [showSaved, setShowSaved] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const [titleColor, setTitleColor] = useState(null);
   const [contentColor, setContentColor] = useState(null);
@@ -61,8 +62,12 @@ const NoteDetails = () => {
       motif: currentNote && currentNote[0].motif,
     },
     onSubmit: () => {
-      const title = editedTitle ? editedTitle : currentNote[0].title;
-      const content = editedContent ? editedContent : currentNote[0].content;
+      const title =
+        typeof editedTitle === "string" ? editedTitle : currentNote[0].title;
+      const content =
+        typeof editedContent === "string"
+          ? editedContent
+          : currentNote[0].content;
       const today = new Date();
       const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
       const motif = editedTheme ? editedTheme : currentNote[0].motif;
@@ -77,8 +82,13 @@ const NoteDetails = () => {
         date,
         user_id,
       };
-      updateMemo(entry);
-      setShowSaved(true);
+
+      if (title.trim() !== "" && content.trim() !== "") {
+        updateMemo(entry);
+        setShowSaved(true);
+      } else {
+        setShowError(true);
+      }
     },
   });
 
@@ -87,6 +97,12 @@ const NoteDetails = () => {
       setShowSaved(false);
     }, 3000);
   }, [showSaved]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+  }, [showError]);
 
   const gettingTheme = useCallback(
     (themeToUse = null) => {
@@ -126,7 +142,10 @@ const NoteDetails = () => {
     <>
       {currentNote && (
         <Wrapper background={background}>
-          {showSaved && <SavedMessage />}
+          {showSaved && <MessageAlert message="Note Saved!" />}
+          {showError && (
+            <MessageAlert message="Fill the content and title before saving!" />
+          )}
           <Containment id="container">
             <HomeButton />
 

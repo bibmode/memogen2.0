@@ -8,7 +8,7 @@ const Wrapper = styled("div")(({ theme }) => ({
   paddingBottom: theme.spacing(5),
 }));
 
-const Link = styled("a")(({ theme }) => ({
+const Link = styled("a")(() => ({
   color: "inherit",
   textDecoration: "none",
   ":hover": {
@@ -17,11 +17,18 @@ const Link = styled("a")(({ theme }) => ({
 }));
 
 const TypeNavigation = () => {
-  const { getMemos, theUser } = useContext(AppContext);
+  const { getMemos, theUser, setToggleMemoTodo, toggleMemoTodo } =
+    useContext(AppContext);
 
   const handleClick = () => {
-    getMemos(theUser.id);
+    if (!toggleMemoTodo) {
+      getMemos(theUser.id);
+      setToggleMemoTodo(true);
+    } else {
+      setToggleMemoTodo(false);
+    }
   };
+
   return (
     <Wrapper>
       <Breadcrumbs>
@@ -31,7 +38,9 @@ const TypeNavigation = () => {
           </Link>
         </Typography>
         <Typography color="inherit" variant="subtitle2" underline="hover">
-          To-dos
+          <Link href="#" onClick={handleClick}>
+            To-dos
+          </Link>
         </Typography>
       </Breadcrumbs>
     </Wrapper>
