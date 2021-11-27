@@ -11,15 +11,24 @@ const Toggle = styled(Box)(({ theme }) => ({
   display: "flex",
   marginBottom: theme.spacing(2),
   color: theme.palette.text.secondary,
+  "& > *": {
+    textTransform: "capitalize !important",
+  },
 }));
 
 const CompletedTodos = () => {
-  const { completedTodos } = useContext(AppContext);
+  const { completedTodos, bulkDeleteTodos } = useContext(AppContext);
 
   const [toggle, setToggle] = useState(false);
 
   const handleClick = () => {
     setToggle(!toggle);
+  };
+
+  const deleteAll = () => {
+    const completedIds = completedTodos.map((todo) => Number(todo.todo_id));
+    console.log(completedIds);
+    bulkDeleteTodos(completedIds);
   };
 
   return (
@@ -31,7 +40,7 @@ const CompletedTodos = () => {
           startIcon={!toggle ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           onClick={handleClick}
         >
-          Completed
+          Completed {completedTodos.length}
         </Button>
       </Toggle>
       {completedTodos &&
@@ -44,6 +53,7 @@ const CompletedTodos = () => {
             todo={todo}
           />
         ))}
+      {completedTodos && toggle && <Button onClick={deleteAll}>Delete</Button>}
     </>
   );
 };

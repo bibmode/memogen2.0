@@ -14,7 +14,7 @@ import CreateIcon from "@mui/icons-material/Create";
 
 import NotesGrid from "../components/NotesGrid";
 import TypeNavigation from "../components/TypeNavigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 
 import { useNavigate } from "react-router";
@@ -60,10 +60,9 @@ const Home = () => {
     logoutUser,
     isAuth,
     getMemos,
-    getTodos,
-    todosData,
     getActives,
     getCompleted,
+    getTodos,
     toggleMemoTodo,
     setToggleAddTodo,
   } = useContext(AppContext);
@@ -73,13 +72,10 @@ const Home = () => {
   }, [getMemos, theUser]);
 
   useEffect(() => {
-    getTodos(theUser.id);
-  }, []);
-
-  useEffect(() => {
+    theUser && getTodos(theUser.id);
     getActives();
     getCompleted();
-  }, [todosData]);
+  }, [theUser, getTodos, getActives, getCompleted]);
 
   useEffect(() => {
     if (!isAuth) {

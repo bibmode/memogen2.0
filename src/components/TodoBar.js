@@ -23,6 +23,10 @@ const Wrapper = styled(Paper)(({ theme, color }) => ({
 const CheckboxLabel = styled(FormControlLabel)((props) => ({
   textDecoration: props.done,
   color: props.color,
+  maxWidth: 720,
+  overflowWrap: "break-all",
+  wordBreak: "break-word",
+  hyphens: "auto",
 }));
 
 const TodoBar = ({ index, label, todo, checked }) => {

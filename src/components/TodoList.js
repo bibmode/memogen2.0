@@ -6,24 +6,26 @@ import CompletedTodos from "./CompletedTodos";
 import TodoBar from "./TodoBar";
 
 const TodoList = () => {
-  const { activeTodos } = useContext(AppContext);
+  const { activeTodos, todosData, completedTodos } = useContext(AppContext);
 
   return (
     <Box>
-      <Container disableGutters={true} maxWidth="md">
-        {/* active todos */}
-        {activeTodos &&
-          activeTodos.map((todo) => (
-            <TodoBar
-              checked={false}
-              index={Number(todo.todo_id)}
-              label={todo.content}
-              todo={todo}
-            />
-          ))}
+      {todosData && (
+        <Container disableGutters={true} maxWidth="md">
+          {/* active todos */}
+          {activeTodos &&
+            activeTodos.map((todo) => (
+              <TodoBar
+                checked={false}
+                index={Number(todo.todo_id)}
+                label={todo.content}
+                todo={todo}
+              />
+            ))}
 
-        <CompletedTodos />
-      </Container>
+          {completedTodos && <CompletedTodos />}
+        </Container>
+      )}
     </Box>
   );
 };

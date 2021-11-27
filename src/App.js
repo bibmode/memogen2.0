@@ -167,6 +167,20 @@ function App() {
   const [activeTodos, setActiveTodos] = useState(null);
   const [toggleAddTodo, setToggleAddTodo] = useState(false);
 
+  const getActives = useCallback(() => {
+    const actives = todosData
+      ? todosData.filter((todo) => todo.status === "active")
+      : null;
+    setActiveTodos(actives);
+  }, [todosData]);
+
+  const getCompleted = useCallback(() => {
+    const completed = todosData
+      ? todosData.filter((todo) => todo.status === "completed")
+      : null;
+    setCompletedTodos(completed);
+  }, [todosData]);
+
   const getTodos = useCallback((userId) => {
     let formData = new FormData();
     formData.append("id", userId);
@@ -198,6 +212,15 @@ function App() {
       });
   };
 
+  const bulkDeleteTodos = (todosArr) => {
+    todosArr.forEach((todo) => {
+      axios.delete("http://localhost/memogen-backend/todo-delete.php", {
+        data: { id: todo },
+      });
+    });
+    getTodos(Number(theUser.id));
+  };
+
   const insertTodo = (newData) => {
     axios
       .post("http://localhost/memogen-backend/todo-insert.php", newData)
@@ -220,19 +243,10 @@ function App() {
     updateTodo(entry);
   };
 
-  const getActives = () => {
-    const actives = todosData
-      ? todosData.filter((todo) => todo.status === "active")
-      : null;
-    setActiveTodos(actives);
-  };
-
-  const getCompleted = () => {
-    const completed = todosData
-      ? todosData.filter((todo) => todo.status === "completed")
-      : null;
-    setCompletedTodos(completed);
-  };
+  // useEffect(() => {
+  //   theUser && getTodos(theUser.id);
+  //   console.log("line 249");
+  // }, [theUser, getTodos]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -275,6 +289,7 @@ function App() {
             setCompletedTodos,
             updateTodo,
             deleteTodo,
+            bulkDeleteTodos,
             insertTodo,
             handleCheckbox,
             activeTodos,

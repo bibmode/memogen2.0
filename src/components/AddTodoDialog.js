@@ -18,16 +18,12 @@ const Text = styled(DialogContentText)(() => ({
 
 // form validation
 const validationSchema = yup.object({
-  content: yup.string("Enter your task").required("Text is required"),
+  content: yup.string().max(55, "Too Long!"),
 });
 
 const AddTodoDialog = () => {
   const { toggleAddTodo, setToggleAddTodo, insertTodo, theUser } =
     useContext(AppContext);
-
-  const handleClose = () => {
-    setToggleAddTodo(false);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -35,15 +31,22 @@ const AddTodoDialog = () => {
       status: "active",
       user: Number(theUser.id),
     },
+    validationSchema: validationSchema,
+    validateOnChange: true, // this one
+    validateOnBlur: true, // and this one
     onSubmit: (values) => {
       insertTodo(values);
-      console.log(values);
+      formik.resetForm({
+        content: "",
+        status: "active",
+        user: Number(theUser.id),
+      });
     },
   });
 
-  // const handleSubmit = ({content}) => {
-  //   const content =
-  // }
+  const handleClose = () => {
+    setToggleAddTodo(false);
+  };
 
   return (
     <>
