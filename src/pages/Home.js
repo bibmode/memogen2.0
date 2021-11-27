@@ -65,6 +65,7 @@ const Home = () => {
     getTodos,
     toggleMemoTodo,
     setToggleAddTodo,
+    searchOn,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -72,10 +73,12 @@ const Home = () => {
   }, [getMemos, theUser]);
 
   useEffect(() => {
-    theUser && getTodos(theUser.id);
+    if (!searchOn) {
+      theUser && getTodos(theUser.id);
+    }
     getActives();
     getCompleted();
-  }, [theUser, getTodos, getActives, getCompleted]);
+  }, [theUser, getTodos, getActives, getCompleted, searchOn]);
 
   useEffect(() => {
     if (!isAuth) {

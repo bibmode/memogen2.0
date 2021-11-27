@@ -46,18 +46,19 @@ const Wrapper = styled("div")(({ theme }) => ({
 }));
 
 const Search = () => {
-  const { searchMemos } = useContext(AppContext);
+  const { searchMemos, searchTodos, toggleMemoTodo } = useContext(AppContext);
 
   const handleSearchInput = (e) => {
-    searchMemos(e.target.value);
+    toggleMemoTodo ? searchMemos(e.target.value) : searchTodos(e.target.value);
   };
+
   return (
     <Wrapper>
       <SearchIconWrapper>
         <img src="images/🔍.svg" alt="search icon" />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search notes…"
+        placeholder={`Search ${toggleMemoTodo ? "Notes" : "Tasks"}...`}
         inputProps={{ "aria-label": "search" }}
         onChange={handleSearchInput}
       />

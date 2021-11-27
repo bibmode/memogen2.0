@@ -167,6 +167,8 @@ function App() {
   const [completedTodos, setCompletedTodos] = useState(null);
   const [activeTodos, setActiveTodos] = useState(null);
   const [toggleAddTodo, setToggleAddTodo] = useState(false);
+  const [searchOn, setSearchOn] = useState(false);
+  const [toggleCompleted, setToggleCompleted] = useState(false);
 
   const getActives = useCallback(() => {
     const actives = todosData
@@ -230,6 +232,32 @@ function App() {
       });
   };
 
+  const searchTodos = (searchInput) => {
+    if (searchInput.trim() !== "") {
+      setSearchOn(true);
+      axios
+        .get(
+          `http://localhost/memogen-backend/todo-search.php?id=${theUser.id}&search=${searchInput}`
+        )
+        .then((res) => {
+          if (res.data[0]) {
+            setTodosData(res.data);
+            const todosFound = res.data;
+            const actives = todosFound.filter(
+              (todo) => todo.status === "active"
+            );
+            const completes = todosFound.filter(
+              (todo) => todo.status === "completed"
+            );
+            setCompletedTodos(completes);
+            setActiveTodos(actives);
+            if (completes.length) setToggleCompleted(true);
+            else setToggleCompleted(false);
+          } else setSearchOn(false);
+        });
+    } else setSearchOn(false);
+  };
+
   const handleCheckbox = (todo) => {
     const todo_id = Number(todo.todo_id);
     const user_id = Number(todo.user_id);
@@ -243,11 +271,6 @@ function App() {
     };
     updateTodo(entry);
   };
-
-  // useEffect(() => {
-  //   theUser && getTodos(theUser.id);
-  //   console.log("line 249");
-  // }, [theUser, getTodos]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -299,6 +322,11 @@ function App() {
             getCompleted,
             toggleAddTodo,
             setToggleAddTodo,
+            searchTodos,
+            setSearchOn,
+            searchOn,
+            toggleCompleted,
+            setToggleCompleted,
           }}
         >
           <Router>

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AppContext } from "../App";
 import TodoBar from "./TodoBar";
 
@@ -22,12 +22,15 @@ const DeleteBtn = styled(Button)(({ theme }) => ({
 }));
 
 const CompletedTodos = () => {
-  const { completedTodos, bulkDeleteTodos } = useContext(AppContext);
-
-  const [toggle, setToggle] = useState(false);
+  const {
+    completedTodos,
+    bulkDeleteTodos,
+    toggleCompleted,
+    setToggleCompleted,
+  } = useContext(AppContext);
 
   const handleClick = () => {
-    setToggle(!toggle);
+    setToggleCompleted(!toggleCompleted);
   };
 
   const deleteAll = () => {
@@ -41,14 +44,14 @@ const CompletedTodos = () => {
         <Button
           color={"inherit"}
           size="small"
-          startIcon={!toggle ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          startIcon={!toggleCompleted ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           onClick={handleClick}
         >
           Completed {completedTodos.length}
         </Button>
       </Toggle>
       {completedTodos &&
-        toggle &&
+        toggleCompleted &&
         completedTodos.map((todo) => (
           <TodoBar
             checked={true}
@@ -57,7 +60,7 @@ const CompletedTodos = () => {
             todo={todo}
           />
         ))}
-      {completedTodos.length > 0 && toggle && (
+      {completedTodos.length > 0 && toggleCompleted && (
         <DeleteBtn
           variant="contained"
           size="small"
