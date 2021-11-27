@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -19,6 +19,7 @@ import {
   yellow,
 } from "@mui/material/colors";
 import axios from "axios";
+import CustomAlert from "./pages/CustomAlert";
 
 const theme = createTheme({
   palette: {
@@ -45,6 +46,12 @@ const Axios = axios.create({
 });
 
 function App() {
+  const [userError, setUserError] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [successRegister, setSuccessRegister] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
+
   const [notesData, setNotesData] = useState(null);
   const [showThemes, setShowThemes] = useState(false);
   const [editedTheme, setEditedTheme] = useState("monochrome");
@@ -74,6 +81,82 @@ function App() {
     });
 
     return register.data;
+  };
+
+  const getNewUserId = (email) => {
+    axios
+      .get(`http://localhost/memogen-backend/user-id.php?email=${email}`)
+      .then((res) => {
+        setDefaultData(res.data[0].id);
+      });
+  };
+
+  const setDefaultData = (id) => {
+    const today = new Date();
+
+    const defaultNotes = [
+      {
+        title: "Playground 1",
+        content:
+          "You can change the theme, title, and content to your heart's content! :D",
+        date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`,
+        motif: "blue",
+        user: Number(id),
+      },
+      {
+        title: "Playground 2",
+        content: "Write whatever you want :D!",
+        date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`,
+        motif: "yellow",
+        user: Number(id),
+      },
+      {
+        title: "Playground 3",
+        content: "You can delete notes now that you're a user! ",
+        date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`,
+        motif: "red",
+        user: Number(id),
+      },
+    ];
+
+    const defaultTasks = [
+      {
+        content: "Welcome to memogen to-dos!",
+        status: "active",
+        user: Number(id),
+      },
+      {
+        content: "You can create a new task by clicking the pencil button",
+        status: "active",
+        user: Number(id),
+      },
+      {
+        content: "Check any task box when completed",
+        status: "active",
+        user: Number(id),
+      },
+      {
+        content: "You can delete an individual task",
+        status: "completed",
+        user: Number(id),
+      },
+      {
+        content: "You can even delete all completed tasks",
+        status: "completed",
+        user: Number(id),
+      },
+    ];
+
+    console.log(defaultNotes);
+    console.log(defaultTasks);
+
+    defaultNotes.forEach((note) => {
+      insertMemo(note);
+    });
+
+    defaultTasks.forEach((task) => {
+      insertTodo(task);
+    });
   };
 
   const loginUser = async (user) => {
@@ -272,13 +355,89 @@ function App() {
     updateTodo(entry);
   };
 
+  useEffect(() => {
+    if (userError) {
+      setTimeout(() => {
+        setUserError(false);
+      }, 3000);
+    }
+  }, [userError]);
+
+  useEffect(() => {
+    if (successMsg) {
+      setTimeout(() => {
+        setSuccessMsg(false);
+      }, 3000);
+    }
+  }, [successMsg]);
+
+  useEffect(() => {
+    if (saveError) {
+      setTimeout(() => {
+        setSaveError(false);
+      }, 3000);
+    }
+  }, [saveError]);
+
+  useEffect(() => {
+    if (successRegister) {
+      setTimeout(() => {
+        setSuccessRegister(false);
+      }, 3000);
+    }
+  }, [successRegister]);
+
+  useEffect(() => {
+    if (registerError) {
+      setTimeout(() => {
+        setRegisterError(false);
+      }, 3000);
+    }
+  }, [registerError]);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+        {registerError && (
+          <CustomAlert
+            severity="error"
+            message="Enter valid email and password!"
+          />
+        )}
+        {successRegister && (
+          <CustomAlert
+            severity="success"
+            message="You successfully registered!"
+          />
+        )}
+        {userError && (
+          <CustomAlert
+            severity="error"
+            message="Create an account to access this feature and more!"
+          />
+        )}
+        {successMsg && <CustomAlert severity="success" message="Note saved!" />}
+        {saveError && (
+          <CustomAlert
+            severity="warning"
+            message="Set the title and content!"
+          />
+        )}
         <AppContext.Provider
           value={{
+            userError,
+            setUserError,
+            successMsg,
+            setSuccessMsg,
+            successRegister,
+            setSuccessRegister,
+            registerError,
+            setRegisterError,
+            saveError,
+            setSaveError,
             notesData,
             setNotesData,
+            setDefaultData,
             // getData,
             showThemes,
             setShowThemes,
@@ -293,6 +452,7 @@ function App() {
             loginUser,
             logoutUser,
             registerUser,
+            getNewUserId,
             isLoggedIn,
             signInToggle,
             setSignInToggle,

@@ -13,7 +13,6 @@ import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router";
-import MessageAlert from "../components/MessageAlert";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -38,6 +37,10 @@ const CreateNote = () => {
     theUser,
     notesData,
     setNotesData,
+    setUserError,
+    setSuccessMsg,
+    successMsg,
+    setSaveError,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -60,8 +63,6 @@ const CreateNote = () => {
   const [titleColor, setTitleColor] = useState(null);
   const [contentColor, setContentColor] = useState(null);
   const [background, setBackground] = useState("#fff");
-  const [showSaved, setShowSaved] = useState(false);
-  const [showError, setShowError] = useState(false);
 
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
@@ -80,24 +81,34 @@ const CreateNote = () => {
       content: "",
     },
     onSubmit: () => {
-      const title = editedTitle;
-      const content = editedContent;
-      const today = new Date();
-      const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-      const motif = editedTheme;
-      const user = Number(theUser.id);
-      const entry = {
-        title,
-        content,
-        motif,
-        date,
-        user,
-      };
-      if (title.trim() !== "" && content.trim() !== "") {
-        insertMemo(entry);
-        setShowSaved(true);
+      if (Number(theUser.id) !== 8) {
+        const title = editedTitle;
+        const content = editedContent;
+        const today = new Date();
+        const date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+        const motif = editedTheme;
+        const user = Number(theUser.id);
+        const entry = {
+          title,
+          content,
+          motif,
+          date,
+          user,
+        };
+        if (
+          title !== null &&
+          content !== null &&
+          title.trim() !== "" &&
+          content.trim() !== ""
+        ) {
+          insertMemo(entry);
+          console.log(entry);
+          setSuccessMsg(true);
+        } else {
+          setSaveError(true);
+        }
       } else {
-        setShowError(true);
+        setUserError(true);
       }
     },
   });
@@ -108,22 +119,10 @@ const CreateNote = () => {
   }, [navigate, notesData]);
 
   useEffect(() => {
-    if (showSaved && notesData) {
+    if (successMsg && notesData) {
       goToNewMemo();
     }
-  }, [notesData, goToNewMemo, showSaved]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSaved(false);
-    }, 3000);
-  }, [showSaved]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowError(false);
-    }, 3000);
-  }, [showError]);
+  }, [notesData, goToNewMemo, successMsg]);
 
   const gettingTheme = useCallback(() => {
     let currentMotif = motifs.filter((motif) => motif[0] === editedTheme);
@@ -138,10 +137,6 @@ const CreateNote = () => {
 
   return (
     <Wrapper background={background}>
-      {showSaved && <MessageAlert message="Note Saved!" />}
-      {showError && (
-        <MessageAlert message="Fill the content and title before saving!" />
-      )}
       <Containment id="container">
         <HomeButton label="Cancel" />
 

@@ -18,7 +18,7 @@ const Wrapper = styled("div")(() => ({
 const Tools = ({ noteId }) => {
   const navigate = useNavigate();
 
-  const { showThemes, setShowThemes, deleteMemo, theUser } =
+  const { showThemes, setShowThemes, deleteMemo, theUser, setUserError } =
     useContext(AppContext);
 
   const deleteNote = () => {
@@ -26,7 +26,7 @@ const Tools = ({ noteId }) => {
       if (noteId) deleteMemo(noteId);
       navigate("/home");
     } else {
-      alert("create an account to use this feature!");
+      setUserError(true);
     }
   };
 

@@ -8,7 +8,6 @@ import { useFormik } from "formik";
 import NoteForm from "../components/NoteForm";
 import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
-import MessageAlert from "../components/MessageAlert";
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -26,13 +25,19 @@ const Containment = styled(Container)(() => ({
 
 const NoteDetails = () => {
   const { id } = useParams();
-  const { notesData, motifs, editedTheme, setEditedTheme, updateMemo } =
-    useContext(AppContext);
+  const {
+    notesData,
+    motifs,
+    editedTheme,
+    setEditedTheme,
+    updateMemo,
+    setSuccessMsg,
+    setSaveError,
+  } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState(null);
   const [editedTitle, setEditedTitle] = useState(null);
   const [editedContent, setEditedContent] = useState(null);
-  const [showSaved, setShowSaved] = useState(false);
   const [showError, setShowError] = useState(false);
 
   const [titleColor, setTitleColor] = useState(null);
@@ -85,18 +90,12 @@ const NoteDetails = () => {
 
       if (title.trim() !== "" && content.trim() !== "") {
         updateMemo(entry);
-        setShowSaved(true);
+        setSuccessMsg(true);
       } else {
-        setShowError(true);
+        setSaveError(true);
       }
     },
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSaved(false);
-    }, 3000);
-  }, [showSaved]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -142,13 +141,8 @@ const NoteDetails = () => {
     <>
       {currentNote && (
         <Wrapper background={background}>
-          {showSaved && <MessageAlert message="Note Saved!" />}
-          {showError && (
-            <MessageAlert message="Fill the content and title before saving!" />
-          )}
           <Containment id="container">
             <HomeButton />
-
             <EditableFields
               editTitle={(e) => setEditedTitle(e.target.innerHTML)}
               editContent={(e) => setEditedContent(e.target.innerHTML)}

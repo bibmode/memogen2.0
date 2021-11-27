@@ -27,6 +27,8 @@ const CompletedTodos = () => {
     bulkDeleteTodos,
     toggleCompleted,
     setToggleCompleted,
+    theUser,
+    setUserError,
   } = useContext(AppContext);
 
   const handleClick = () => {
@@ -34,6 +36,10 @@ const CompletedTodos = () => {
   };
 
   const deleteAll = () => {
+    if (Number(theUser.id) === 8) {
+      setUserError(true);
+      return;
+    }
     const completedIds = completedTodos.map((todo) => Number(todo.todo_id));
     bulkDeleteTodos(completedIds);
   };

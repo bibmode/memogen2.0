@@ -47,7 +47,7 @@ const DeleteBtn = styled(IconButton)(() => ({
 }));
 
 const NotesGrid = () => {
-  const { notesData, motifs, deleteMemo, theUser, getMemos } =
+  const { notesData, motifs, deleteMemo, theUser, getMemos, setUserError } =
     useContext(AppContext);
 
   const getBackground = (theme) => {
@@ -61,9 +61,9 @@ const NotesGrid = () => {
   };
 
   const handleDelete = (id) => {
-    if (Number(theUser.id) === 8)
-      alert("create an account to access this feature");
-    else {
+    if (Number(theUser.id) === 8) {
+      setUserError(true);
+    } else {
       deleteMemo(id);
       getMemos(Number(theUser.id));
     }

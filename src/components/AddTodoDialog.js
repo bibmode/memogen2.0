@@ -22,7 +22,7 @@ const validationSchema = yup.object({
 });
 
 const AddTodoDialog = () => {
-  const { toggleAddTodo, setToggleAddTodo, insertTodo, theUser } =
+  const { toggleAddTodo, setToggleAddTodo, insertTodo, theUser, setUserError } =
     useContext(AppContext);
 
   const [charCount, setCharCount] = useState(55);
@@ -36,6 +36,13 @@ const AddTodoDialog = () => {
     validationSchema: validationSchema,
     validateOnChange: true, // this one
     onSubmit: (values) => {
+      if (Number(theUser.id) === 8) {
+        handleClose();
+
+        setUserError(true);
+        return;
+      }
+      console.log(values);
       insertTodo(values);
       handleClose();
     },

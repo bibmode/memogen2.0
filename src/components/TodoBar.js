@@ -30,7 +30,16 @@ const CheckboxLabel = styled(FormControlLabel)((props) => ({
 }));
 
 const TodoBar = ({ index, label, todo, checked }) => {
-  const { handleCheckbox, deleteTodo } = useContext(AppContext);
+  const { handleCheckbox, deleteTodo, theUser, setUserError } =
+    useContext(AppContext);
+
+  const handleDelete = (index) => {
+    if (Number(theUser.id) === 8) {
+      setUserError(true);
+      return;
+    }
+    deleteTodo(index);
+  };
 
   return (
     <Wrapper elevation={0} key={index} color={checked ? grey[50] : "#fff"}>
@@ -44,7 +53,7 @@ const TodoBar = ({ index, label, todo, checked }) => {
       />
       {checked && (
         <Tooltip title="Delete">
-          <IconButton onClick={() => deleteTodo(index)}>
+          <IconButton onClick={() => handleDelete(index)}>
             <CustomIcon path="/images/🗑️.svg" altName="delete" />
           </IconButton>
         </Tooltip>

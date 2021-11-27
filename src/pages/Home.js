@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 import Search from "../components/Search";
 import TodoList from "../components/TodoList";
 import AddTodoDialog from "../components/AddTodoDialog";
+import CustomAlert from "./CustomAlert";
 
 const ParentContainer = styled("div")(({ theme }) => ({
   backgroundColor: grey[100],
@@ -66,6 +67,7 @@ const Home = () => {
     toggleMemoTodo,
     setToggleAddTodo,
     searchOn,
+    userError,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -88,9 +90,9 @@ const Home = () => {
 
   const handleAddClick = () => {
     if (toggleMemoTodo) {
-      if (Number(theUser.id) === 8)
-        alert("create an account to access this feature");
-      else navigate("/create", { replace: true });
+      // if (Number(theUser.id) === 8)
+      //   alert("create an account to access this feature");
+      navigate("/create", { replace: true });
     } else {
       setToggleAddTodo(true);
     }
@@ -98,6 +100,12 @@ const Home = () => {
 
   return (
     <ParentContainer>
+      {userError && (
+        <CustomAlert
+          severity="error"
+          message="Create an account to access this feature and more!"
+        />
+      )}
       <Container sx={{ position: "relative", minHeight: "100vh" }}>
         <Header>
           <Typography id="greeting" component="h1" variant="h4">

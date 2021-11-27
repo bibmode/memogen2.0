@@ -46,7 +46,14 @@ const Form = styled(Box)(({ theme }) => ({
 }));
 
 const RegisterForm = () => {
-  const { registerUser, isAuth, switchForm } = useContext(AppContext);
+  const {
+    registerUser,
+    isAuth,
+    switchForm,
+    setSuccessRegister,
+    setRegisterError,
+    getNewUserId,
+  } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -60,9 +67,11 @@ const RegisterForm = () => {
     onSubmit: async (values) => {
       const data = await registerUser(values);
       if (data.success) {
-        alert("you have successfully registered!");
+        console.log(data, values);
+        await getNewUserId(values.email);
+        setSuccessRegister(true);
       } else {
-        alert("enter a valid email or password");
+        setRegisterError(true);
       }
     },
   });
