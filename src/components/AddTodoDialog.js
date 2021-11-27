@@ -6,7 +6,7 @@ import {
   DialogContentText,
   TextField,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../App";
 import { styled } from "@mui/system";
 import * as yup from "yup";
@@ -25,6 +25,8 @@ const AddTodoDialog = () => {
   const { toggleAddTodo, setToggleAddTodo, insertTodo, theUser } =
     useContext(AppContext);
 
+  const [charCount, setCharCount] = useState(55);
+
   const formik = useFormik({
     initialValues: {
       content: "",
@@ -33,19 +35,25 @@ const AddTodoDialog = () => {
     },
     validationSchema: validationSchema,
     validateOnChange: true, // this one
-    validateOnBlur: true, // and this one
     onSubmit: (values) => {
       insertTodo(values);
-      formik.resetForm({
-        content: "",
-        status: "active",
-        user: Number(theUser.id),
-      });
+      handleClose();
     },
   });
 
   const handleClose = () => {
+    formik.resetForm({
+      content: "",
+      status: "active",
+      user: Number(theUser.id),
+    });
     setToggleAddTodo(false);
+    setCharCount(55);
+  };
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+    setCharCount(55 - input.length);
   };
 
   return (
@@ -58,7 +66,7 @@ const AddTodoDialog = () => {
           }}
         >
           <DialogContent>
-            <Text>2 characters left</Text>
+            <Text>{charCount} characters left</Text>
             <TextField
               autoFocus
               margin="dense"
@@ -70,13 +78,14 @@ const AddTodoDialog = () => {
               variant="standard"
               value={formik.values.content}
               onChange={formik.handleChange}
+              onInput={handleChange}
               error={formik.touched.content && Boolean(formik.errors.content)}
               helperText={formik.touched.content && formik.errors.content}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose} type="submit" id="submitBtn">
+            <Button type="submit" id="submitBtn">
               Save
             </Button>
           </DialogActions>

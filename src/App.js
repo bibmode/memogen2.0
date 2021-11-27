@@ -101,6 +101,7 @@ function App() {
       if (data.success && data.user) {
         setIsAuth(true);
         setTheUser(data.user);
+        setToggleMemoTodo(true);
       } else {
         console.log("not successful");
       }

@@ -16,6 +16,11 @@ const Toggle = styled(Box)(({ theme }) => ({
   },
 }));
 
+const DeleteBtn = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  float: "right",
+}));
+
 const CompletedTodos = () => {
   const { completedTodos, bulkDeleteTodos } = useContext(AppContext);
 
@@ -27,7 +32,6 @@ const CompletedTodos = () => {
 
   const deleteAll = () => {
     const completedIds = completedTodos.map((todo) => Number(todo.todo_id));
-    console.log(completedIds);
     bulkDeleteTodos(completedIds);
   };
 
@@ -53,7 +57,16 @@ const CompletedTodos = () => {
             todo={todo}
           />
         ))}
-      {completedTodos && toggle && <Button onClick={deleteAll}>Delete</Button>}
+      {completedTodos.length > 0 && toggle && (
+        <DeleteBtn
+          variant="contained"
+          size="small"
+          disableElevation
+          onClick={deleteAll}
+        >
+          Delete all
+        </DeleteBtn>
+      )}
     </>
   );
 };

@@ -17,28 +17,26 @@ const Link = styled("a")(() => ({
 }));
 
 const TypeNavigation = () => {
-  const { getMemos, theUser, setToggleMemoTodo, toggleMemoTodo } =
-    useContext(AppContext);
+  const { setToggleMemoTodo } = useContext(AppContext);
 
-  const handleClick = () => {
-    if (!toggleMemoTodo) {
-      getMemos(theUser.id);
-      setToggleMemoTodo(true);
-    } else {
-      setToggleMemoTodo(false);
-    }
+  const openNotes = () => {
+    setToggleMemoTodo(true);
+  };
+
+  const openTodos = () => {
+    setToggleMemoTodo(false);
   };
 
   return (
     <Wrapper>
       <Breadcrumbs>
         <Typography color="text.primary" variant="subtitle2">
-          <Link href="#" onClick={handleClick}>
+          <Link href="#" onClick={openNotes}>
             All Notes
           </Link>
         </Typography>
         <Typography color="inherit" variant="subtitle2" underline="hover">
-          <Link href="#" onClick={handleClick}>
+          <Link href="#" onClick={openTodos}>
             To-dos
           </Link>
         </Typography>

@@ -5,6 +5,7 @@ import { AppContext } from "../App";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import CustomIcon from "./CustomIcon";
+import EmptyMsg from "./EmptyMsg";
 
 const Note = styled(Card)((props) => ({
   padding: 30,
@@ -104,6 +105,7 @@ const NotesGrid = () => {
             </Grid>
           ))}
       </Grid>
+      {!notesData && <EmptyMsg type="note" />}
     </Box>
   );
 };

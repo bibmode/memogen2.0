@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { useContext } from "react";
 import { AppContext } from "../App";
 import CompletedTodos from "./CompletedTodos";
+import EmptyMsg from "./EmptyMsg";
 import TodoBar from "./TodoBar";
 
 const TodoList = () => {
@@ -26,6 +27,8 @@ const TodoList = () => {
           {completedTodos && <CompletedTodos />}
         </Container>
       )}
+
+      {!todosData && <EmptyMsg type="task" />}
     </Box>
   );
 };
