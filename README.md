@@ -1,10 +1,9 @@
 <!-- Please update value in the {}  -->
 
-<h1 align="center">{Memogen}</h1>
+# Frontend Mentor - Rock, Paper, Scissors solution
 
-<div align="center">
-   This is the frontend of my first CRUD notes and todo list manager application.
-</div>
+This is the frontend of my first CRUD notes and todo list manager application.
+
 
 <!-- TABLE OF CONTENTS -->
 
