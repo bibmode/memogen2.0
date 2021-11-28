@@ -67,7 +67,6 @@ const RegisterForm = () => {
     onSubmit: async (values) => {
       const data = await registerUser(values);
       if (data.success) {
-        console.log(data, values);
         await getNewUserId(values.email);
         setSuccessRegister(true);
       } else {

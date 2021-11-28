@@ -102,7 +102,6 @@ const CreateNote = () => {
           content.trim() !== ""
         ) {
           insertMemo(entry);
-          console.log(entry);
           setSuccessMsg(true);
         } else {
           setSaveError(true);

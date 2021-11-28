@@ -38,11 +38,9 @@ const AddTodoDialog = () => {
     onSubmit: (values) => {
       if (Number(theUser.id) === 8) {
         handleClose();
-
         setUserError(true);
         return;
       }
-      console.log(values);
       insertTodo(values);
       handleClose();
     },

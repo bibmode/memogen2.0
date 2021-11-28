@@ -20,6 +20,7 @@ import {
 } from "@mui/material/colors";
 import axios from "axios";
 import CustomAlert from "./pages/CustomAlert";
+import { AnimatePresence } from "framer-motion";
 
 const theme = createTheme({
   palette: {
@@ -48,6 +49,7 @@ const Axios = axios.create({
 function App() {
   const [userError, setUserError] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [noteDeleted, setNoteDeleted] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
   const [successRegister, setSuccessRegister] = useState(false);
   const [registerError, setRegisterError] = useState(false);
@@ -146,9 +148,6 @@ function App() {
         user: Number(id),
       },
     ];
-
-    console.log(defaultNotes);
-    console.log(defaultTasks);
 
     defaultNotes.forEach((note) => {
       insertMemo(note);
@@ -395,40 +394,73 @@ function App() {
     }
   }, [registerError]);
 
+  useEffect(() => {
+    if (noteDeleted) {
+      setTimeout(() => {
+        setNoteDeleted(false);
+      }, 3000);
+    }
+  }, [noteDeleted]);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        {registerError && (
-          <CustomAlert
-            severity="error"
-            message="Enter valid email and password!"
-          />
-        )}
-        {successRegister && (
-          <CustomAlert
-            severity="success"
-            message="You successfully registered!"
-          />
-        )}
-        {userError && (
-          <CustomAlert
-            severity="error"
-            message="Create an account to access this feature and more!"
-          />
-        )}
-        {successMsg && <CustomAlert severity="success" message="Note saved!" />}
-        {saveError && (
-          <CustomAlert
-            severity="warning"
-            message="Set the title and content!"
-          />
-        )}
+        <AnimatePresence exitBeforeEnter>
+          {registerError && (
+            <CustomAlert
+              severity="error"
+              message="Enter valid email and password!"
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence exitBeforeEnter>
+          {successRegister && (
+            <CustomAlert
+              severity="success"
+              message="You successfully registered!"
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence exitBeforeEnter>
+          {userError && (
+            <CustomAlert
+              severity="error"
+              message="Create an account to access this feature and more!"
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence exitBeforeEnter>
+          {successMsg && (
+            <CustomAlert severity="success" message="Note saved!" />
+          )}
+          {saveError && (
+            <CustomAlert
+              severity="warning"
+              message="Set the title and content!"
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence exitBeforeEnter>
+          {noteDeleted && (
+            <CustomAlert
+              severity="success"
+              message="Note successfully deleted!"
+            />
+          )}
+        </AnimatePresence>
+
         <AppContext.Provider
           value={{
             userError,
             setUserError,
             successMsg,
             setSuccessMsg,
+            noteDeleted,
+            setNoteDeleted,
             successRegister,
             setSuccessRegister,
             registerError,

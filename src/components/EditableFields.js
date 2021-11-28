@@ -5,6 +5,7 @@ import ThemesBar from "./ThemesBar";
 import { useContext } from "react";
 import { AppContext } from "../App";
 import Tools from "./Tools";
+import { AnimatePresence } from "framer-motion";
 
 const Title = styled(Typography)(({ theme }) => ({
   paddingTop: theme.spacing(3),
@@ -63,7 +64,10 @@ const EditableFields = ({
         <Tools noteId={currentNote ? currentNote[0].memo_id : null} />
       </TitleToolWrap>
 
-      {showThemes && <ThemesBar />}
+      <AnimatePresence exitBeforeEnter>
+        {showThemes && <ThemesBar />}
+      </AnimatePresence>
+
       <Content
         role="textarea"
         contentEditable={true}

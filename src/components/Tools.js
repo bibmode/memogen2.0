@@ -18,12 +18,21 @@ const Wrapper = styled("div")(() => ({
 const Tools = ({ noteId }) => {
   const navigate = useNavigate();
 
-  const { showThemes, setShowThemes, deleteMemo, theUser, setUserError } =
-    useContext(AppContext);
+  const {
+    showThemes,
+    setShowThemes,
+    deleteMemo,
+    theUser,
+    setUserError,
+    setNoteDeleted,
+  } = useContext(AppContext);
 
   const deleteNote = () => {
     if (Number(theUser.id) !== 8) {
-      if (noteId) deleteMemo(noteId);
+      if (noteId) {
+        deleteMemo(noteId);
+        setNoteDeleted(true);
+      }
       navigate("/home");
     } else {
       setUserError(true);
