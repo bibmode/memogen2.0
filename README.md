@@ -28,11 +28,11 @@ This is the frontend of my first CRUD notes and todo list manager application.
 
 ## Overview
 
-- ###Where can I see your demo? 
-   -I will be deploying this entire app in the future. I have a limited time to deploy it on heroku which I have not used before since the deadline of this school project is later this day @ 12:00 am 2021-11-28. To use it for now, follow the instructions in the How-to-use section.
-- ###What was your experience?
+- **Where can I see your demo?**
+  -I will be deploying this entire app in the future. I have a limited time to deploy it on heroku which I have not used before since the deadline of this school project is later this day @ 12:00 am 2021-11-28. To use it for now, follow the instructions in the How-to-use section.
+- **What was your experience?**
    -I had a lot of fun building the UI of this project. I learned how to utilize the useCallback hook in react to memoize function calls in different components.
-- ###Are there improvements you want to make in the future?
+- **Are there improvements you want to make in the future?**
    -I am planning to add more sleek animations in the routing of the pages in the future and animate the exit of the notes and tasks soon.
 
 ### Built With
