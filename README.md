@@ -50,7 +50,7 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 
 <!-- List the features of your application or follow the template. Don't share the figma file here :) -->
 
-<h5>There are 2 types of users in this application</h5>
+#There are 2 types of users in this application<
 <ol>
    <li>Visitor user (don't have an account)</li>
    <li>Registered user (has an account)</li>
