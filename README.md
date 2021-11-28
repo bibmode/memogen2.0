@@ -38,6 +38,7 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 - [React](https://reactjs.org/)
 - [Material UI](https://mui.com/)
 - [Framer Motion](https://www.framer.com/motion/)
+- [Axios](https://github.com/axios/axios)
 
 ## Features
 
