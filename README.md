@@ -6,8 +6,8 @@ This is the frontend of my first CRUD notes and todo list manager application.
 
 <div align="center">
   <h3>
-    <a href="https://youtu.be/C4gemNbYcis">
-      Memogen Video Demo
+    <a href="https://www.youtube.com/watch?v=C4gemNbYcis&ab_channel=GENEVIEVENAVALES">
+      Video Demo
     </a>
   </h3>
 </div>
