@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/system";
 import { createContext, useCallback, useEffect, useState } from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NoteDetails from "./pages/NoteDetails";
 import CreateNote from "./pages/CreateNote";
