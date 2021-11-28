@@ -56,6 +56,18 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
    <li>Registered user (has an account)</li>
 </ol>
 
+<h4>Visitor's priviledges and limitations</h4>
+- Can change the content, title and themes of the existing notes
+- Can cross the existing tasks 
+- Cannot Add new notes
+- Cannot add new tasks
+
+<h4>Registered user's priviledges and limitations</h4>
+- Can change the content, title and themes of the existing notes
+- Can cross the existing tasks 
+- Can add infinite amount of notes
+- Can add infinite amount of tasks
+
 ## How To Use
 
 <!-- Example: -->
