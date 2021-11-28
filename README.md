@@ -6,14 +6,6 @@
    This is the frontend of my first CRUD notes and todo list manager application.
 </div>
 
-<div align="center">
-  <h3>
-    <a href="https://{your-demo-link.your-domain}">
-      Demo
-    </a>
-  </h3>
-</div>
-
 <!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
@@ -33,10 +25,12 @@
 
 Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
 
-- Where can I see your demo?
+- Where can I see your demo? 
+   -I will be deploying this entire app in the future. I have a limited time to deploy it on heroku which I have not used before since the deadline of this school project is later this day @ 12:00 am 2021-11-28. To use it for now, follow the instructions in the How-to-use section.
 - What was your experience?
-- What have you learned/improved?
-- Your wisdom? :)
+   -I had a lot of fun building the UI of this project. I learned how to utilize the useCallback hook in react to memoize function calls in different components.
+- Are there improvements you want to make in the future?
+   -I am planning to add more sleek animations in the routing of the pages in the future and animate the exit of the notes and tasks soon.
 
 ### Built With
 
@@ -47,8 +41,6 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 - [Framer Motion](https://www.framer.com/motion/)
 
 ## Features
-
-<!-- List the features of your application or follow the template. Don't share the figma file here :) -->
 
 <h4>There are 2 types of users in this application</h4>
 <ol>
@@ -74,8 +66,6 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 
 ## How To Use
 
-<!-- Example: -->
-
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```bash
@@ -89,16 +79,10 @@ $ npm install
 $ npm start
 ```
 
+This is just the front end source code of memogen. To run this app in your computer you need to clone the backend repo of this project [here](https://github.com/bibmode/memogen-backend). Follow the instructions in the read me of the memogen backend repository.
+
 ## Acknowledgements
 
-<!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For example: -->
-
-- [Steps to replicate a design with only HTML and CSS](https://devchallenges-blogs.web.app/how-to-replicate-design/)
 - [Node.js](https://nodejs.org/)
 - [Marked - a markdown parser](https://github.com/chjj/marked)
 
-## Contact
-
-- Website [your-website.com](https://{your-web-site-link})
-- GitHub [@your-username](https://{github.com/your-usermame})
-- Twitter [@your-twitter](https://{twitter.com/your-username})
