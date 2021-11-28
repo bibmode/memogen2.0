@@ -57,16 +57,20 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 </ol>
 
 <h4>Visitor's priviledges and limitations</h4>
-- Can change the content, title and themes of the existing notes
-- Can cross the existing tasks
-- Cannot Add new notes
-- Cannot add new tasks
+<ul>
+  <li>Can change the content, title and themes of the existing notes</li>
+  <li>Can cross the existing tasks</li>
+  <li>Cannot Add new notes</li>
+  <li>Cannot add new tasks</li>
+</ul>
 
 <h4>Registered user's priviledges and limitations</h4>
-- Can change the content, title and themes of the existing notes
-- Can cross the existing tasks 
-- Can add infinite amount of notes
-- Can add infinite amount of tasks
+<ul>
+  <li>Can change the content, title and themes of the existing notes</li>
+  <li>Can cross the existing tasks</li>
+  <li>Can add infinite amount of notes</li>
+  <li>Can add infinite amount of tasks</li>
+</ul>
 
 ## How To Use
 
