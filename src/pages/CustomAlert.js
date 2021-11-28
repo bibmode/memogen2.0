@@ -16,7 +16,7 @@ const alertVariants = {
     opacity: 0,
     y: "-5rem",
     transition: {
-      duration: 1,
+      duration: 0.2,
       type: "spring",
     },
   },

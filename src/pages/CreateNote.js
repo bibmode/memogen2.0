@@ -13,6 +13,30 @@ import EditableFields from "../components/EditableFields";
 import HomeButton from "../components/HomeButton";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router";
+// import { motion } from "framer-motion";
+
+// const containerVariants = {
+//   hidden: {
+//     scale: 0.5,
+//     x: "100vw",
+//   },
+//   visible: {
+//     scale: 1,
+//     x: 0,
+//     transition: {
+//       duration: 0.6,
+//       type: "spring",
+//     },
+//   },
+//   exit: {
+//     x: "100vw",
+//     transition: {
+//       duration: 0.8,
+//       type: "tween",
+//       ease: "backInOut",
+//     },
+//   },
+// };
 
 const Wrapper = styled("div")((props) => ({
   height: "100vh",
@@ -115,6 +139,7 @@ const CreateNote = () => {
   const goToNewMemo = useCallback(() => {
     const memoId = notesData[notesData.length - 1].memo_id;
     navigate(`/note/${memoId}`, { replace: true });
+    console.log();
   }, [navigate, notesData]);
 
   useEffect(() => {
@@ -136,7 +161,13 @@ const CreateNote = () => {
 
   return (
     <Wrapper background={background}>
-      <Containment id="container">
+      <Containment
+        id="container"
+        // component={motion.div}
+        // variants={containerVariants}
+        // initial="hidden"
+        // animate="visible"
+      >
         <HomeButton label="Cancel" />
 
         <EditableFields

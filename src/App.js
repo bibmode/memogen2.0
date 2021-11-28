@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/system";
 import { createContext, useCallback, useEffect, useState } from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import NoteDetails from "./pages/NoteDetails";
 import CreateNote from "./pages/CreateNote";
@@ -366,7 +366,7 @@ function App() {
     if (successMsg) {
       setTimeout(() => {
         setSuccessMsg(false);
-      }, 3000);
+      }, 1000);
     }
   }, [successMsg]);
 
@@ -521,14 +521,12 @@ function App() {
             setToggleCompleted,
           }}
         >
-          <Router>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/create" element={<CreateNote />} />
-              <Route path="/note/:id" element={<NoteDetails />} />
-            </Routes>
-          </Router>
+          <Routes>
+            <Route exact path="/" element={<LoginPage />} />
+            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/create" element={<CreateNote />} />
+            <Route exact path="/note/:id" element={<NoteDetails />} />
+          </Routes>
         </AppContext.Provider>
       </div>
     </ThemeProvider>

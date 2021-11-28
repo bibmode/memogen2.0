@@ -22,7 +22,9 @@ import Search from "../components/Search";
 import TodoList from "../components/TodoList";
 import AddTodoDialog from "../components/AddTodoDialog";
 import CustomAlert from "./CustomAlert";
+import { motion } from "framer-motion";
 
+//mui component styling
 const ParentContainer = styled("div")(({ theme }) => ({
   backgroundColor: grey[100],
   minHeight: "100vh",
@@ -90,8 +92,6 @@ const Home = () => {
 
   const handleAddClick = () => {
     if (toggleMemoTodo) {
-      // if (Number(theUser.id) === 8)
-      //   alert("create an account to access this feature");
       navigate("/create", { replace: true });
     } else {
       setToggleAddTodo(true);
@@ -99,7 +99,7 @@ const Home = () => {
   };
 
   return (
-    <ParentContainer>
+    <ParentContainer component={motion.div}>
       {userError && (
         <CustomAlert
           severity="error"
