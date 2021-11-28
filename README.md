@@ -1,6 +1,6 @@
 <!-- Please update value in the {}  -->
 
-# Frontend Mentor - Rock, Paper, Scissors solution
+# Memogen Notes and Todolist Application - Frontend
 
 This is the frontend of my first CRUD notes and todo list manager application.
 
